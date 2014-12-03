@@ -1,0 +1,12 @@
+#
+# This file contains extra pkgconfig build requirements that don't get picked up but are 
+# desirable. One name per line, no whitespace.
+#
+pkgconfig(libxml-2.0)
+libxml2-python
+python-dev
+libgcrypt-dev
+libxml2-dev
+zlib-dev
+libgpg-error-dev
+libxslt-bin
