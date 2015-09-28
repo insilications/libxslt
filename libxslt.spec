@@ -4,7 +4,7 @@
 #
 Name     : libxslt
 Version  : 1.1.28
-Release  : 12
+Release  : 13
 URL      : http://xmlsoft.org/sources/libxslt-1.1.28.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.28.tar.gz
 Summary  : Library providing the GNOME XSLT engine
