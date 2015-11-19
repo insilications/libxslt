@@ -4,7 +4,7 @@
 #
 Name     : libxslt
 Version  : 1.1.28
-Release  : 13
+Release  : 14
 URL      : http://xmlsoft.org/sources/libxslt-1.1.28.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.28.tar.gz
 Summary  : Library providing the GNOME XSLT engine
@@ -23,6 +23,7 @@ BuildRequires : libxslt-bin
 BuildRequires : pkgconfig(libxml-2.0)
 BuildRequires : python-dev
 BuildRequires : zlib-dev
+Patch1: cve-2015-7995.patch
 
 %description
 This C library allows to transform XML files into other XML files
@@ -53,6 +54,7 @@ Group: Development
 Requires: libxslt-lib
 Requires: libxslt-bin
 Requires: libxslt-data
+Provides: libxslt-devel
 
 %description dev
 dev components for the libxslt package.
@@ -85,6 +87,7 @@ python components for the libxslt package.
 
 %prep
 %setup -q -n libxslt-1.1.28
+%patch1 -p1
 
 %build
 %configure --disable-static
