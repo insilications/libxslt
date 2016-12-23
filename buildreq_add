@@ -10,3 +10,4 @@ libxml2-dev
 zlib-dev
 libgpg-error-dev
 libxslt-bin
+xz-dev

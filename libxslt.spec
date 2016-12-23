@@ -4,7 +4,7 @@
 #
 Name     : libxslt
 Version  : 1.1.29
-Release  : 19
+Release  : 20
 URL      : http://xmlsoft.org/sources/libxslt-1.1.29.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.29.tar.gz
 Summary  : Library providing the GNOME XSLT engine
@@ -22,6 +22,7 @@ BuildRequires : libxml2-python
 BuildRequires : libxslt-bin
 BuildRequires : pkgconfig(libxml-2.0)
 BuildRequires : python-dev
+BuildRequires : xz-dev
 BuildRequires : zlib-dev
 
 %description
@@ -88,10 +89,12 @@ python components for the libxslt package.
 %setup -q -n libxslt-1.1.29
 
 %build
+export LANG=C
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
 %check
+export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost
@@ -157,8 +160,10 @@ rm -rf %{buildroot}
 /usr/include/libxslt/xsltexports.h
 /usr/include/libxslt/xsltlocale.h
 /usr/include/libxslt/xsltutils.h
-/usr/lib64/*.so
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/libexslt.so
+/usr/lib64/libxslt.so
+/usr/lib64/pkgconfig/libexslt.pc
+/usr/lib64/pkgconfig/libxslt.pc
 /usr/share/aclocal/*.m4
 
 %files doc
@@ -169,7 +174,10 @@ rm -rf %{buildroot}
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libexslt.so.0
+/usr/lib64/libexslt.so.0.8.17
+/usr/lib64/libxslt.so.1
+/usr/lib64/libxslt.so.1.1.29
 
 %files python
 %defattr(-,root,root,-)
