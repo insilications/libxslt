@@ -65,6 +65,7 @@ libxslt.so.1:xsltCheckRead
 libxslt.so.1:xsltCheckWrite
 libxslt.so.1:xsltChoose
 libxslt.so.1:xsltCleanupGlobals
+libxslt.so.1:xsltCleanupIds
 libxslt.so.1:xsltCleanupTemplates
 libxslt.so.1:xsltComment
 libxslt.so.1:xsltCompileAttr

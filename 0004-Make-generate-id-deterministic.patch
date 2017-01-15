@@ -1,0 +1,173 @@
+Description: Make generate-id() provide stable IDs
+Author: Daniel Veillard
+Origin: upstream, https://bugzilla.gnome.org/attachment.cgi?id=306475
+Bug: https://bugzilla.gnome.org/show_bug.cgi?id=751621
+Bug-Debian: https://bugs.debian.org/823857
+Last-Update: 2015-07-01
+
+Index: b/libxslt/functions.c
+===================================================================
+--- a/libxslt/functions.c
++++ b/libxslt/functions.c
+@@ -652,6 +652,63 @@ xsltFormatNumberFunction(xmlXPathParserC
+ }
+ 
+ /**
++ * xsltCleanupIds:
++ * @ctxt: the transformation context
++ * @root: the root of the resulting document
++ *
++ * This clean up ids which may have been saved in Element contents
++ * by xsltGenerateIdFunction() to provide stable IDs on elements.
++ *
++ * Returns the number of items cleaned or -1 in case of error
++ */
++int
++xsltCleanupIds(xsltTransformContextPtr ctxt, xmlNodePtr root) {
++    xmlNodePtr cur;
++    int count = 0;
++
++    if ((ctxt == NULL) || (root == NULL))
++        return(-1);
++    if (root->type != XML_ELEMENT_NODE)
++        return(-1);
++
++    cur = root;
++    while (cur != NULL) {
++	if (cur->type == XML_ELEMENT_NODE) {
++	    if (cur->content != NULL) {
++	        cur->content = NULL;
++		count++;
++	    }
++	    if (cur->children != NULL) {
++		cur = cur->children;
++		continue;
++	    }
++	}
++	if (cur->next != NULL) {
++	    cur = cur->next;
++	    continue;
++	}
++	do {
++	    cur = cur->parent;
++	    if (cur == NULL)
++		break;
++	    if (cur == (xmlNodePtr) root) {
++		cur = NULL;
++		break;
++	    }
++	    if (cur->next != NULL) {
++		cur = cur->next;
++		break;
++	    }
++	} while (cur != NULL);
++    }
++
++fprintf(stderr, "Attributed %d IDs for element, cleaned up %d\n",
++        ctxt->nextid, count);
++
++    return(count);
++}
++
++/**
+  * xsltGenerateIdFunction:
+  * @ctxt:  the XPath Parser context
+  * @nargs:  the number of arguments
+@@ -702,7 +759,39 @@ xsltGenerateIdFunction(xmlXPathParserCon
+     if (obj)
+         xmlXPathFreeObject(obj);
+ 
+-    val = (long)((char *)cur - (char *)&base_address);
++    /*
++     * Try to provide stable ID for generated document:
++     *   - usually ID are computed to be placed on elements via attributes
++     *     so using the element as the node for the ID
++     *   - the cur->content should be a correct placeholder for this, we use
++     *     it to hold element node numbers in xmlXPathOrderDocElems to
++     *     speed up XPath too
++     *   - xsltCleanupIds() clean them up before handing the XSLT output
++     *     to the API client.
++     *   - other nodes types use the node address method but that should
++     *     not end up in resulting document ID
++     *   - we can enable this by default without risk of performance issues
++     *     only the one pass xsltCleanupIds() is added
++     */
++    if (cur->type == XML_ELEMENT_NODE) {
++        if (cur->content == NULL) {
++	    xsltTransformContextPtr tctxt;
++
++	    tctxt = xsltXPathGetTransformContext(ctxt);
++	    if (tctxt == NULL) {
++		val = (long)((char *)cur - (char *)&base_address);
++	    } else {
++		tctxt->nextid++;
++		val = tctxt->nextid;
++		cur->content = (void *) (val);
++	    }
++	} else {
++	    val = (long) cur->content;
++	}
++    } else {
++	val = (long)((char *)cur - (char *)&base_address);
++    }
++
+     if (val >= 0) {
+       snprintf((char *)str, sizeof(str), "idp%ld", val);
+     } else {
+Index: b/libxslt/functions.h
+===================================================================
+--- a/libxslt/functions.h
++++ b/libxslt/functions.h
+@@ -64,6 +64,13 @@ XSLTPUBFUN void XSLTCALL
+ 					 int nargs);
+ 
+ /*
++ * Cleanup for ID generation
++ */
++XSLTPUBFUN int XSLTCALL
++	xsltCleanupIds			(xsltTransformContextPtr ctxt,
++					 xmlNodePtr root);
++
++/*
+  * And the registration
+  */
+ 
+Index: b/libxslt/transform.c
+===================================================================
+--- a/libxslt/transform.c
++++ b/libxslt/transform.c
+@@ -700,6 +700,7 @@ xsltNewTransformContext(xsltStylesheetPt
+     cur->traceCode = (unsigned long*) &xsltDefaultTrace;
+     cur->xinclude = xsltGetXIncludeDefault();
+     cur->keyInitLevel = 0;
++    cur->nextid = 0;
+ 
+     return(cur);
+ 
+@@ -6105,6 +6106,13 @@ xsltApplyStylesheetInternal(xsltStyleshe
+     if (root != NULL) {
+         const xmlChar *doctype = NULL;
+ 
++        /*
++	 * cleanup ids which may have been saved in Elements content ptrs
++	 */
++	if (ctxt->nextid != 0) {
++	    xsltCleanupIds(ctxt, root);
++	}
++
+         if ((root->ns != NULL) && (root->ns->prefix != NULL))
+ 	    doctype = xmlDictQLookup(ctxt->dict, root->ns->prefix, root->name);
+ 	if (doctype == NULL)
+Index: b/libxslt/xsltInternals.h
+===================================================================
+--- a/libxslt/xsltInternals.h
++++ b/libxslt/xsltInternals.h
+@@ -1788,6 +1788,8 @@ struct _xsltTransformContext {
+     int funcLevel;      /* Needed to catch recursive functions issues */
+     int maxTemplateDepth;
+     int maxTemplateVars;
++
++    unsigned long nextid;/* for generating stable ids */
+ };
+ 
+ /**
