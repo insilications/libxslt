@@ -6,7 +6,7 @@
 #
 Name     : libxslt
 Version  : 1.1.29
-Release  : 21
+Release  : 22
 URL      : http://xmlsoft.org/sources/libxslt-1.1.29.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.29.tar.gz
 Source99 : http://xmlsoft.org/sources/libxslt-1.1.29.tar.gz.asc
@@ -27,7 +27,8 @@ BuildRequires : pkgconfig(libxml-2.0)
 BuildRequires : python-dev
 BuildRequires : xz-dev
 BuildRequires : zlib-dev
-Patch1: 0004-Make-generate-id-deterministic.patch
+Patch1: cve-2017-5029.patch
+Patch2: 0004-Make-generate-id-deterministic.patch
 
 %description
 This C library allows to transform XML files into other XML files
@@ -92,10 +93,11 @@ python components for the libxslt package.
 %prep
 %setup -q -n libxslt-1.1.29
 %patch1 -p1
+%patch2 -p1
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1484510966
+export SOURCE_DATE_EPOCH=1493425233
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
@@ -107,7 +109,7 @@ export no_proxy=localhost
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1484510966
+export SOURCE_DATE_EPOCH=1493425233
 rm -rf %{buildroot}
 %make_install
 
