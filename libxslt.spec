@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x15588B26596BEA5D (Daniel.Veillard@w3.org)
 #
 Name     : libxslt
-Version  : 1.1.30
-Release  : 27
-URL      : http://xmlsoft.org/sources/libxslt-1.1.30.tar.gz
-Source0  : http://xmlsoft.org/sources/libxslt-1.1.30.tar.gz
-Source99 : http://xmlsoft.org/sources/libxslt-1.1.30.tar.gz.asc
+Version  : 1.1.31
+Release  : 28
+URL      : http://xmlsoft.org/sources/libxslt-1.1.31.tar.gz
+Source0  : http://xmlsoft.org/sources/libxslt-1.1.31.tar.gz
+Source99 : http://xmlsoft.org/sources/libxslt-1.1.31.tar.gz.asc
 Summary  : Library providing the GNOME XSLT engine
 Group    : Development/Tools
 License  : MIT
@@ -18,6 +18,7 @@ Requires: libxslt-lib
 Requires: libxslt-python
 Requires: libxslt-data
 Requires: libxslt-doc
+BuildRequires : docbook-xml
 BuildRequires : libgcrypt-dev
 BuildRequires : libgpg-error-dev
 BuildRequires : libxml2-dev
@@ -90,7 +91,7 @@ python components for the libxslt package.
 
 
 %prep
-%setup -q -n libxslt-1.1.30
+%setup -q -n libxslt-1.1.31
 %patch1 -p1
 
 %build
@@ -98,7 +99,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1504538298
+export SOURCE_DATE_EPOCH=1507285159
 export CFLAGS="$CFLAGS -fstack-protector-strong "
 export FCFLAGS="$CFLAGS -fstack-protector-strong "
 export FFLAGS="$CFLAGS -fstack-protector-strong "
@@ -114,7 +115,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1504538298
+export SOURCE_DATE_EPOCH=1507285159
 rm -rf %{buildroot}
 %make_install
 
@@ -129,24 +130,24 @@ rm -rf %{buildroot}
 
 %files data
 %defattr(-,root,root,-)
-/usr/share/doc/libxslt-python-1.1.30/TODO
-/usr/share/doc/libxslt-python-1.1.30/examples/basic.py
-/usr/share/doc/libxslt-python-1.1.30/examples/basic.pyc
-/usr/share/doc/libxslt-python-1.1.30/examples/basic.pyo
-/usr/share/doc/libxslt-python-1.1.30/examples/exslt.py
-/usr/share/doc/libxslt-python-1.1.30/examples/exslt.pyc
-/usr/share/doc/libxslt-python-1.1.30/examples/exslt.pyo
-/usr/share/doc/libxslt-python-1.1.30/examples/extelem.py
-/usr/share/doc/libxslt-python-1.1.30/examples/extelem.pyc
-/usr/share/doc/libxslt-python-1.1.30/examples/extelem.pyo
-/usr/share/doc/libxslt-python-1.1.30/examples/extfunc.py
-/usr/share/doc/libxslt-python-1.1.30/examples/extfunc.pyc
-/usr/share/doc/libxslt-python-1.1.30/examples/extfunc.pyo
-/usr/share/doc/libxslt-python-1.1.30/examples/pyxsltproc.py
-/usr/share/doc/libxslt-python-1.1.30/examples/pyxsltproc.pyc
-/usr/share/doc/libxslt-python-1.1.30/examples/pyxsltproc.pyo
-/usr/share/doc/libxslt-python-1.1.30/examples/test.xml
-/usr/share/doc/libxslt-python-1.1.30/examples/test.xsl
+/usr/share/doc/libxslt-python-1.1.31/TODO
+/usr/share/doc/libxslt-python-1.1.31/examples/basic.py
+/usr/share/doc/libxslt-python-1.1.31/examples/basic.pyc
+/usr/share/doc/libxslt-python-1.1.31/examples/basic.pyo
+/usr/share/doc/libxslt-python-1.1.31/examples/exslt.py
+/usr/share/doc/libxslt-python-1.1.31/examples/exslt.pyc
+/usr/share/doc/libxslt-python-1.1.31/examples/exslt.pyo
+/usr/share/doc/libxslt-python-1.1.31/examples/extelem.py
+/usr/share/doc/libxslt-python-1.1.31/examples/extelem.pyc
+/usr/share/doc/libxslt-python-1.1.31/examples/extelem.pyo
+/usr/share/doc/libxslt-python-1.1.31/examples/extfunc.py
+/usr/share/doc/libxslt-python-1.1.31/examples/extfunc.pyc
+/usr/share/doc/libxslt-python-1.1.31/examples/extfunc.pyo
+/usr/share/doc/libxslt-python-1.1.31/examples/pyxsltproc.py
+/usr/share/doc/libxslt-python-1.1.31/examples/pyxsltproc.pyc
+/usr/share/doc/libxslt-python-1.1.31/examples/pyxsltproc.pyo
+/usr/share/doc/libxslt-python-1.1.31/examples/test.xml
+/usr/share/doc/libxslt-python-1.1.31/examples/test.xsl
 
 %files dev
 %defattr(-,root,root,-)
@@ -189,9 +190,9 @@ rm -rf %{buildroot}
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libexslt.so.0
-/usr/lib64/libexslt.so.0.8.18
+/usr/lib64/libexslt.so.0.8.19
 /usr/lib64/libxslt.so.1
-/usr/lib64/libxslt.so.1.1.30
+/usr/lib64/libxslt.so.1.1.31
 
 %files python
 %defattr(-,root,root,-)
