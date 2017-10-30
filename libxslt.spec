@@ -6,7 +6,7 @@
 #
 Name     : libxslt
 Version  : 1.1.31
-Release  : 28
+Release  : 30
 URL      : http://xmlsoft.org/sources/libxslt-1.1.31.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.31.tar.gz
 Source99 : http://xmlsoft.org/sources/libxslt-1.1.31.tar.gz.asc
@@ -99,7 +99,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1507285159
+export SOURCE_DATE_EPOCH=1509406029
 export CFLAGS="$CFLAGS -fstack-protector-strong "
 export FCFLAGS="$CFLAGS -fstack-protector-strong "
 export FFLAGS="$CFLAGS -fstack-protector-strong "
@@ -115,9 +115,12 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1507285159
+export SOURCE_DATE_EPOCH=1509406029
 rm -rf %{buildroot}
 %make_install
+## make_install_append content
+find -name "*.pyo" %{buildroot} | xargs rm -f
+## make_install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -133,19 +136,14 @@ rm -rf %{buildroot}
 /usr/share/doc/libxslt-python-1.1.31/TODO
 /usr/share/doc/libxslt-python-1.1.31/examples/basic.py
 /usr/share/doc/libxslt-python-1.1.31/examples/basic.pyc
-/usr/share/doc/libxslt-python-1.1.31/examples/basic.pyo
 /usr/share/doc/libxslt-python-1.1.31/examples/exslt.py
 /usr/share/doc/libxslt-python-1.1.31/examples/exslt.pyc
-/usr/share/doc/libxslt-python-1.1.31/examples/exslt.pyo
 /usr/share/doc/libxslt-python-1.1.31/examples/extelem.py
 /usr/share/doc/libxslt-python-1.1.31/examples/extelem.pyc
-/usr/share/doc/libxslt-python-1.1.31/examples/extelem.pyo
 /usr/share/doc/libxslt-python-1.1.31/examples/extfunc.py
 /usr/share/doc/libxslt-python-1.1.31/examples/extfunc.pyc
-/usr/share/doc/libxslt-python-1.1.31/examples/extfunc.pyo
 /usr/share/doc/libxslt-python-1.1.31/examples/pyxsltproc.py
 /usr/share/doc/libxslt-python-1.1.31/examples/pyxsltproc.pyc
-/usr/share/doc/libxslt-python-1.1.31/examples/pyxsltproc.pyo
 /usr/share/doc/libxslt-python-1.1.31/examples/test.xml
 /usr/share/doc/libxslt-python-1.1.31/examples/test.xsl
 

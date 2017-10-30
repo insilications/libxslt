@@ -1,0 +1,1 @@
+find -name "*.pyo" %{buildroot} | xargs rm -f

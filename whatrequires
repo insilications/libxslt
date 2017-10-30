@@ -1,0 +1,15 @@
+# This file contains recursive sources that require this package
+cargo
+edk2
+filesystem
+gcc
+libgfortran-avx
+libgfortran-compat-soname3
+libvirt
+linux-tools
+nautilus
+rustc
+wayland
+xdg-user-dirs
+xdg-user-dirs-gtk
+xdg-utils
