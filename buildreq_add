@@ -11,3 +11,4 @@ zlib-dev
 libgpg-error-dev
 libxslt-bin
 xz-dev
+docbook-xml

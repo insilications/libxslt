@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x15588B26596BEA5D (Daniel.Veillard@w3.org)
 #
 Name     : libxslt
-Version  : 1.1.31
-Release  : 30
-URL      : http://xmlsoft.org/sources/libxslt-1.1.31.tar.gz
-Source0  : http://xmlsoft.org/sources/libxslt-1.1.31.tar.gz
-Source99 : http://xmlsoft.org/sources/libxslt-1.1.31.tar.gz.asc
+Version  : 1.1.32
+Release  : 31
+URL      : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz
+Source0  : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz
+Source99 : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz.asc
 Summary  : Library providing the GNOME XSLT engine
 Group    : Development/Tools
 License  : MIT
@@ -91,7 +91,7 @@ python components for the libxslt package.
 
 
 %prep
-%setup -q -n libxslt-1.1.31
+%setup -q -n libxslt-1.1.32
 %patch1 -p1
 
 %build
@@ -99,7 +99,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1509406029
+export SOURCE_DATE_EPOCH=1510285196
 export CFLAGS="$CFLAGS -fstack-protector-strong "
 export FCFLAGS="$CFLAGS -fstack-protector-strong "
 export FFLAGS="$CFLAGS -fstack-protector-strong "
@@ -115,7 +115,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1509406029
+export SOURCE_DATE_EPOCH=1510285196
 rm -rf %{buildroot}
 %make_install
 ## make_install_append content
@@ -133,19 +133,19 @@ find -name "*.pyo" %{buildroot} | xargs rm -f
 
 %files data
 %defattr(-,root,root,-)
-/usr/share/doc/libxslt-python-1.1.31/TODO
-/usr/share/doc/libxslt-python-1.1.31/examples/basic.py
-/usr/share/doc/libxslt-python-1.1.31/examples/basic.pyc
-/usr/share/doc/libxslt-python-1.1.31/examples/exslt.py
-/usr/share/doc/libxslt-python-1.1.31/examples/exslt.pyc
-/usr/share/doc/libxslt-python-1.1.31/examples/extelem.py
-/usr/share/doc/libxslt-python-1.1.31/examples/extelem.pyc
-/usr/share/doc/libxslt-python-1.1.31/examples/extfunc.py
-/usr/share/doc/libxslt-python-1.1.31/examples/extfunc.pyc
-/usr/share/doc/libxslt-python-1.1.31/examples/pyxsltproc.py
-/usr/share/doc/libxslt-python-1.1.31/examples/pyxsltproc.pyc
-/usr/share/doc/libxslt-python-1.1.31/examples/test.xml
-/usr/share/doc/libxslt-python-1.1.31/examples/test.xsl
+/usr/share/doc/libxslt-python-1.1.32/TODO
+/usr/share/doc/libxslt-python-1.1.32/examples/basic.py
+/usr/share/doc/libxslt-python-1.1.32/examples/basic.pyc
+/usr/share/doc/libxslt-python-1.1.32/examples/exslt.py
+/usr/share/doc/libxslt-python-1.1.32/examples/exslt.pyc
+/usr/share/doc/libxslt-python-1.1.32/examples/extelem.py
+/usr/share/doc/libxslt-python-1.1.32/examples/extelem.pyc
+/usr/share/doc/libxslt-python-1.1.32/examples/extfunc.py
+/usr/share/doc/libxslt-python-1.1.32/examples/extfunc.pyc
+/usr/share/doc/libxslt-python-1.1.32/examples/pyxsltproc.py
+/usr/share/doc/libxslt-python-1.1.32/examples/pyxsltproc.pyc
+/usr/share/doc/libxslt-python-1.1.32/examples/test.xml
+/usr/share/doc/libxslt-python-1.1.32/examples/test.xsl
 
 %files dev
 %defattr(-,root,root,-)
@@ -188,9 +188,9 @@ find -name "*.pyo" %{buildroot} | xargs rm -f
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libexslt.so.0
-/usr/lib64/libexslt.so.0.8.19
+/usr/lib64/libexslt.so.0.8.20
 /usr/lib64/libxslt.so.1
-/usr/lib64/libxslt.so.1.1.31
+/usr/lib64/libxslt.so.1.1.32
 
 %files python
 %defattr(-,root,root,-)
