@@ -6,7 +6,7 @@
 #
 Name     : libxslt
 Version  : 1.1.32
-Release  : 33
+Release  : 34
 URL      : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz
 Source99 : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz.asc
@@ -15,8 +15,6 @@ Group    : Development/Tools
 License  : MIT
 Requires: libxslt-bin
 Requires: libxslt-lib
-Requires: libxslt-python
-Requires: libxslt-data
 Requires: libxslt-doc
 BuildRequires : docbook-xml
 BuildRequires : libgcrypt-dev
@@ -39,18 +37,9 @@ installed. The xsltproc command is a command line interface to the XSLT engine
 %package bin
 Summary: bin components for the libxslt package.
 Group: Binaries
-Requires: libxslt-data
 
 %description bin
 bin components for the libxslt package.
-
-
-%package data
-Summary: data components for the libxslt package.
-Group: Data
-
-%description data
-data components for the libxslt package.
 
 
 %package dev
@@ -58,7 +47,6 @@ Summary: dev components for the libxslt package.
 Group: Development
 Requires: libxslt-lib
 Requires: libxslt-bin
-Requires: libxslt-data
 Provides: libxslt-devel
 
 %description dev
@@ -76,18 +64,9 @@ doc components for the libxslt package.
 %package lib
 Summary: lib components for the libxslt package.
 Group: Libraries
-Requires: libxslt-data
 
 %description lib
 lib components for the libxslt package.
-
-
-%package python
-Summary: python components for the libxslt package.
-Group: Default
-
-%description python
-python components for the libxslt package.
 
 
 %prep
@@ -99,7 +78,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1517626435
+export SOURCE_DATE_EPOCH=1517685549
 export CFLAGS="$CFLAGS -fstack-protector-strong "
 export FCFLAGS="$CFLAGS -fstack-protector-strong "
 export FFLAGS="$CFLAGS -fstack-protector-strong "
@@ -115,7 +94,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1517626435
+export SOURCE_DATE_EPOCH=1517685549
 rm -rf %{buildroot}
 %make_install
 ## make_install_append content
@@ -130,22 +109,6 @@ find -name "*.pyo" %{buildroot} | xargs rm -f
 %defattr(-,root,root,-)
 /usr/bin/xslt-config
 /usr/bin/xsltproc
-
-%files data
-%defattr(-,root,root,-)
-/usr/share/doc/libxslt-python-1.1.32/TODO
-/usr/share/doc/libxslt-python-1.1.32/examples/basic.py
-/usr/share/doc/libxslt-python-1.1.32/examples/basic.pyc
-/usr/share/doc/libxslt-python-1.1.32/examples/exslt.py
-/usr/share/doc/libxslt-python-1.1.32/examples/exslt.pyc
-/usr/share/doc/libxslt-python-1.1.32/examples/extelem.py
-/usr/share/doc/libxslt-python-1.1.32/examples/extelem.pyc
-/usr/share/doc/libxslt-python-1.1.32/examples/extfunc.py
-/usr/share/doc/libxslt-python-1.1.32/examples/extfunc.pyc
-/usr/share/doc/libxslt-python-1.1.32/examples/pyxsltproc.py
-/usr/share/doc/libxslt-python-1.1.32/examples/pyxsltproc.pyc
-/usr/share/doc/libxslt-python-1.1.32/examples/test.xml
-/usr/share/doc/libxslt-python-1.1.32/examples/test.xsl
 
 %files dev
 %defattr(-,root,root,-)
@@ -191,7 +154,3 @@ find -name "*.pyo" %{buildroot} | xargs rm -f
 /usr/lib64/libexslt.so.0.8.20
 /usr/lib64/libxslt.so.1
 /usr/lib64/libxslt.so.1.1.32
-
-%files python
-%defattr(-,root,root,-)
-/usr/lib64/python*/*
