@@ -6,7 +6,7 @@
 #
 Name     : libxslt
 Version  : 1.1.32
-Release  : 32
+Release  : 33
 URL      : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz
 Source99 : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz.asc
@@ -99,13 +99,13 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1510285196
+export SOURCE_DATE_EPOCH=1517626435
 export CFLAGS="$CFLAGS -fstack-protector-strong "
 export FCFLAGS="$CFLAGS -fstack-protector-strong "
 export FFLAGS="$CFLAGS -fstack-protector-strong "
 export CXXFLAGS="$CXXFLAGS -fstack-protector-strong "
 %configure --disable-static
-make V=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 
 %check
 export LANG=C
@@ -115,7 +115,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1510285196
+export SOURCE_DATE_EPOCH=1517626435
 rm -rf %{buildroot}
 %make_install
 ## make_install_append content
