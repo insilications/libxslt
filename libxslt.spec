@@ -6,7 +6,7 @@
 #
 Name     : libxslt
 Version  : 1.1.32
-Release  : 34
+Release  : 35
 URL      : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz
 Source99 : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz.asc
