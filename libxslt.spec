@@ -23,7 +23,7 @@ BuildRequires : libxml2-dev
 BuildRequires : libxml2-python
 BuildRequires : libxslt-bin
 BuildRequires : pkgconfig(libxml-2.0)
-BuildRequires : python-dev
+
 BuildRequires : xz-dev
 BuildRequires : zlib-dev
 Patch1: 0004-Make-generate-id-deterministic.patch
