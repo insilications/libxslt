@@ -5,17 +5,18 @@
 # Source0 file verified with key 0x15588B26596BEA5D (Daniel.Veillard@w3.org)
 #
 Name     : libxslt
-Version  : 1.1.32
-Release  : 36
-URL      : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz
-Source0  : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz
-Source99 : http://xmlsoft.org/sources/libxslt-1.1.32.tar.gz.asc
-Summary  : Library providing the GNOME XSLT engine
+Version  : 1.1.33
+Release  : 37
+URL      : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
+Source0  : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
+Source99 : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz.asc
+Summary  : XML stylesheet transformation library
 Group    : Development/Tools
 License  : MIT
-Requires: libxslt-bin
-Requires: libxslt-lib
-Requires: libxslt-doc
+Requires: libxslt-bin = %{version}-%{release}
+Requires: libxslt-lib = %{version}-%{release}
+Requires: libxslt-license = %{version}-%{release}
+Requires: libxslt-man = %{version}-%{release}
 BuildRequires : docbook-xml
 BuildRequires : libgcrypt-dev
 BuildRequires : libgpg-error-dev
@@ -23,7 +24,7 @@ BuildRequires : libxml2-dev
 BuildRequires : libxml2-python
 BuildRequires : libxslt-bin
 BuildRequires : pkgconfig(libxml-2.0)
-
+BuildRequires : python-dev
 BuildRequires : xz-dev
 BuildRequires : zlib-dev
 Patch1: 0004-Make-generate-id-deterministic.patch
@@ -37,6 +38,8 @@ installed. The xsltproc command is a command line interface to the XSLT engine
 %package bin
 Summary: bin components for the libxslt package.
 Group: Binaries
+Requires: libxslt-license = %{version}-%{release}
+Requires: libxslt-man = %{version}-%{release}
 
 %description bin
 bin components for the libxslt package.
@@ -45,9 +48,9 @@ bin components for the libxslt package.
 %package dev
 Summary: dev components for the libxslt package.
 Group: Development
-Requires: libxslt-lib
-Requires: libxslt-bin
-Provides: libxslt-devel
+Requires: libxslt-lib = %{version}-%{release}
+Requires: libxslt-bin = %{version}-%{release}
+Provides: libxslt-devel = %{version}-%{release}
 
 %description dev
 dev components for the libxslt package.
@@ -56,6 +59,7 @@ dev components for the libxslt package.
 %package doc
 Summary: doc components for the libxslt package.
 Group: Documentation
+Requires: libxslt-man = %{version}-%{release}
 
 %description doc
 doc components for the libxslt package.
@@ -64,13 +68,30 @@ doc components for the libxslt package.
 %package lib
 Summary: lib components for the libxslt package.
 Group: Libraries
+Requires: libxslt-license = %{version}-%{release}
 
 %description lib
 lib components for the libxslt package.
 
 
+%package license
+Summary: license components for the libxslt package.
+Group: Default
+
+%description license
+license components for the libxslt package.
+
+
+%package man
+Summary: man components for the libxslt package.
+Group: Default
+
+%description man
+man components for the libxslt package.
+
+
 %prep
-%setup -q -n libxslt-1.1.32
+%setup -q -n libxslt-1.1.33
 %patch1 -p1
 
 %build
@@ -78,11 +99,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1517685549
-export CFLAGS="$CFLAGS -fstack-protector-strong "
-export FCFLAGS="$CFLAGS -fstack-protector-strong "
-export FFLAGS="$CFLAGS -fstack-protector-strong "
-export CXXFLAGS="$CXXFLAGS -fstack-protector-strong "
+export SOURCE_DATE_EPOCH=1546618768
+export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -94,12 +115,16 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1517685549
+export SOURCE_DATE_EPOCH=1546618768
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/libxslt
+cp COPYING %{buildroot}/usr/share/package-licenses/libxslt/COPYING
+cp Copyright %{buildroot}/usr/share/package-licenses/libxslt/Copyright
+cp tests/docbook/dtd/3.1.7/COPYRIGHT %{buildroot}/usr/share/package-licenses/libxslt/tests_docbook_dtd_3.1.7_COPYRIGHT
 %make_install
-## make_install_append content
+## install_append content
 find -name "*.pyo" %{buildroot} | xargs rm -f
-## make_install_append end
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -141,16 +166,26 @@ find -name "*.pyo" %{buildroot} | xargs rm -f
 /usr/lib64/pkgconfig/libexslt.pc
 /usr/lib64/pkgconfig/libxslt.pc
 /usr/share/aclocal/*.m4
+/usr/share/man/man3/libexslt.3
+/usr/share/man/man3/libxslt.3
 
 %files doc
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 %doc /usr/share/doc/libxslt/*
-%doc /usr/share/man/man1/*
-%doc /usr/share/man/man3/*
 
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libexslt.so.0
 /usr/lib64/libexslt.so.0.8.20
 /usr/lib64/libxslt.so.1
-/usr/lib64/libxslt.so.1.1.32
+/usr/lib64/libxslt.so.1.1.33
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/libxslt/COPYING
+/usr/share/package-licenses/libxslt/Copyright
+/usr/share/package-licenses/libxslt/tests_docbook_dtd_3.1.7_COPYRIGHT
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/xsltproc.1
