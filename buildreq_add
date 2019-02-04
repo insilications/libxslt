@@ -6,9 +6,11 @@ pkgconfig(libxml-2.0)
 libxml2-python
 python-dev
 libgcrypt-dev
+libgcrypt-dev32
 libxml2-dev
 zlib-dev
 libgpg-error-dev
+libgpg-error-dev32
 libxslt-bin
 xz-dev
 docbook-xml

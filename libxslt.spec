@@ -6,11 +6,11 @@
 #
 Name     : libxslt
 Version  : 1.1.33
-Release  : 37
+Release  : 38
 URL      : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
 Source99 : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz.asc
-Summary  : XML stylesheet transformation library
+Summary  : Library providing the GNOME XSLT engine
 Group    : Development/Tools
 License  : MIT
 Requires: libxslt-bin = %{version}-%{release}
@@ -18,11 +18,20 @@ Requires: libxslt-lib = %{version}-%{release}
 Requires: libxslt-license = %{version}-%{release}
 Requires: libxslt-man = %{version}-%{release}
 BuildRequires : docbook-xml
+BuildRequires : gcc-dev32
+BuildRequires : gcc-libgcc32
+BuildRequires : gcc-libstdc++32
+BuildRequires : glibc-dev32
+BuildRequires : glibc-libc32
 BuildRequires : libgcrypt-dev
+BuildRequires : libgcrypt-dev32
 BuildRequires : libgpg-error-dev
+BuildRequires : libgpg-error-dev32
 BuildRequires : libxml2-dev
 BuildRequires : libxml2-python
 BuildRequires : libxslt-bin
+BuildRequires : pkg-config
+BuildRequires : pkgconfig(32libxml-2.0)
 BuildRequires : pkgconfig(libxml-2.0)
 BuildRequires : python-dev
 BuildRequires : xz-dev
@@ -56,6 +65,17 @@ Provides: libxslt-devel = %{version}-%{release}
 dev components for the libxslt package.
 
 
+%package dev32
+Summary: dev32 components for the libxslt package.
+Group: Default
+Requires: libxslt-lib32 = %{version}-%{release}
+Requires: libxslt-bin = %{version}-%{release}
+Requires: libxslt-dev = %{version}-%{release}
+
+%description dev32
+dev32 components for the libxslt package.
+
+
 %package doc
 Summary: doc components for the libxslt package.
 Group: Documentation
@@ -72,6 +92,15 @@ Requires: libxslt-license = %{version}-%{release}
 
 %description lib
 lib components for the libxslt package.
+
+
+%package lib32
+Summary: lib32 components for the libxslt package.
+Group: Default
+Requires: libxslt-license = %{version}-%{release}
+
+%description lib32
+lib32 components for the libxslt package.
 
 
 %package license
@@ -93,13 +122,16 @@ man components for the libxslt package.
 %prep
 %setup -q -n libxslt-1.1.33
 %patch1 -p1
+pushd ..
+cp -a libxslt-1.1.33 build32
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1546618768
+export SOURCE_DATE_EPOCH=1549313474
 export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -107,20 +139,40 @@ export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=use
 %configure --disable-static
 make  %{?_smp_mflags}
 
+pushd ../build32/
+export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
+export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32"
+export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32"
+export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
+%configure --disable-static    --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+make  %{?_smp_mflags}
+popd
 %check
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
+cd ../build32;
+make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1546618768
+export SOURCE_DATE_EPOCH=1549313474
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libxslt
 cp COPYING %{buildroot}/usr/share/package-licenses/libxslt/COPYING
 cp Copyright %{buildroot}/usr/share/package-licenses/libxslt/Copyright
 cp tests/docbook/dtd/3.1.7/COPYRIGHT %{buildroot}/usr/share/package-licenses/libxslt/tests_docbook_dtd_3.1.7_COPYRIGHT
+pushd ../build32/
+%make_install32
+if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
+then
+pushd %{buildroot}/usr/lib32/pkgconfig
+for i in *.pc ; do ln -s $i 32$i ; done
+popd
+fi
+popd
 %make_install
 ## install_append content
 find -name "*.pyo" %{buildroot} | xargs rm -f
@@ -128,6 +180,7 @@ find -name "*.pyo" %{buildroot} | xargs rm -f
 
 %files
 %defattr(-,root,root,-)
+/usr/lib32/xsltConf.sh
 /usr/lib64/xsltConf.sh
 
 %files bin
@@ -169,6 +222,15 @@ find -name "*.pyo" %{buildroot} | xargs rm -f
 /usr/share/man/man3/libexslt.3
 /usr/share/man/man3/libxslt.3
 
+%files dev32
+%defattr(-,root,root,-)
+/usr/lib32/libexslt.so
+/usr/lib32/libxslt.so
+/usr/lib32/pkgconfig/32libexslt.pc
+/usr/lib32/pkgconfig/32libxslt.pc
+/usr/lib32/pkgconfig/libexslt.pc
+/usr/lib32/pkgconfig/libxslt.pc
+
 %files doc
 %defattr(0644,root,root,0755)
 %doc /usr/share/doc/libxslt/*
@@ -179,6 +241,13 @@ find -name "*.pyo" %{buildroot} | xargs rm -f
 /usr/lib64/libexslt.so.0.8.20
 /usr/lib64/libxslt.so.1
 /usr/lib64/libxslt.so.1.1.33
+
+%files lib32
+%defattr(-,root,root,-)
+/usr/lib32/libexslt.so.0
+/usr/lib32/libexslt.so.0.8.20
+/usr/lib32/libxslt.so.1
+/usr/lib32/libxslt.so.1.1.33
 
 %files license
 %defattr(0644,root,root,0755)
