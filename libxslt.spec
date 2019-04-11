@@ -6,11 +6,11 @@
 #
 Name     : libxslt
 Version  : 1.1.33
-Release  : 38
+Release  : 39
 URL      : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
 Source99 : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz.asc
-Summary  : Library providing the GNOME XSLT engine
+Summary  : XML stylesheet transformation library
 Group    : Development/Tools
 License  : MIT
 Requires: libxslt-bin = %{version}-%{release}
@@ -37,6 +37,7 @@ BuildRequires : python-dev
 BuildRequires : xz-dev
 BuildRequires : zlib-dev
 Patch1: 0004-Make-generate-id-deterministic.patch
+Patch2: pcfile.patch
 
 %description
 This C library allows to transform XML files into other XML files
@@ -48,7 +49,6 @@ installed. The xsltproc command is a command line interface to the XSLT engine
 Summary: bin components for the libxslt package.
 Group: Binaries
 Requires: libxslt-license = %{version}-%{release}
-Requires: libxslt-man = %{version}-%{release}
 
 %description bin
 bin components for the libxslt package.
@@ -60,6 +60,7 @@ Group: Development
 Requires: libxslt-lib = %{version}-%{release}
 Requires: libxslt-bin = %{version}-%{release}
 Provides: libxslt-devel = %{version}-%{release}
+Requires: libxslt = %{version}-%{release}
 
 %description dev
 dev components for the libxslt package.
@@ -122,6 +123,7 @@ man components for the libxslt package.
 %prep
 %setup -q -n libxslt-1.1.33
 %patch1 -p1
+%patch2 -p1
 pushd ..
 cp -a libxslt-1.1.33 build32
 popd
@@ -131,7 +133,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1549313474
+export SOURCE_DATE_EPOCH=1554994389
 export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -158,7 +160,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1549313474
+export SOURCE_DATE_EPOCH=1554994389
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libxslt
 cp COPYING %{buildroot}/usr/share/package-licenses/libxslt/COPYING

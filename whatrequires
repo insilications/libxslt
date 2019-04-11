@@ -1,5 +1,6 @@
 # This file contains recursive sources that require this package
 asciidoc
+boinc-client
 cgit
 colord
 dracut
@@ -14,10 +15,12 @@ libfprint
 libgfortran-avx
 libgfortran-compat-soname3
 libgfortran-compat-soname4
+libkcapi
 libmodulemd
 libvirt
 linux-tools
 nautilus
+neomutt
 pyside2-setup
 raptor2
 sof-crosstool-ng
