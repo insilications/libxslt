@@ -6,11 +6,11 @@
 #
 Name     : libxslt
 Version  : 1.1.33
-Release  : 39
+Release  : 40
 URL      : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
 Source99 : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz.asc
-Summary  : XML stylesheet transformation library
+Summary  : Library providing the GNOME XSLT engine
 Group    : Development/Tools
 License  : MIT
 Requires: libxslt-bin = %{version}-%{release}
@@ -38,6 +38,7 @@ BuildRequires : xz-dev
 BuildRequires : zlib-dev
 Patch1: 0004-Make-generate-id-deterministic.patch
 Patch2: pcfile.patch
+Patch3: CVE-2019-11068.patch
 
 %description
 This C library allows to transform XML files into other XML files
@@ -124,6 +125,7 @@ man components for the libxslt package.
 %setup -q -n libxslt-1.1.33
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 pushd ..
 cp -a libxslt-1.1.33 build32
 popd
@@ -133,7 +135,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1554994389
+export SOURCE_DATE_EPOCH=1555358408
+export LDFLAGS="${LDFLAGS} -fno-lto"
 export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -160,7 +163,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1554994389
+export SOURCE_DATE_EPOCH=1555358408
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libxslt
 cp COPYING %{buildroot}/usr/share/package-licenses/libxslt/COPYING

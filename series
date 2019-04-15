@@ -2,3 +2,4 @@
 0004-Make-generate-id-deterministic.patch
 #CVE-2015-9019.nopatch
 pcfile.patch
+CVE-2019-11068.patch
