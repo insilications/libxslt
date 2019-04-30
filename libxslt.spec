@@ -6,7 +6,7 @@
 #
 Name     : libxslt
 Version  : 1.1.33
-Release  : 40
+Release  : 41
 URL      : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
 Source99 : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz.asc
@@ -39,6 +39,8 @@ BuildRequires : zlib-dev
 Patch1: 0004-Make-generate-id-deterministic.patch
 Patch2: pcfile.patch
 Patch3: CVE-2019-11068.patch
+Patch4: c5eb6cf3aba0af048596106ed839b4ae17ecbcb1.patch
+Patch5: c75b811de0afeea6acf19c99a755b8e1c0585aa9.patch
 
 %description
 This C library allows to transform XML files into other XML files
@@ -126,6 +128,8 @@ man components for the libxslt package.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 pushd ..
 cp -a libxslt-1.1.33 build32
 popd
@@ -135,7 +139,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1555358408
+export SOURCE_DATE_EPOCH=1556652709
 export LDFLAGS="${LDFLAGS} -fno-lto"
 export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -163,7 +167,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1555358408
+export SOURCE_DATE_EPOCH=1556652709
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libxslt
 cp COPYING %{buildroot}/usr/share/package-licenses/libxslt/COPYING
