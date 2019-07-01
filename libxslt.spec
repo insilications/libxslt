@@ -6,7 +6,7 @@
 #
 Name     : libxslt
 Version  : 1.1.33
-Release  : 42
+Release  : 44
 URL      : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
 Source99 : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz.asc
@@ -42,6 +42,7 @@ Patch3: CVE-2019-11068.patch
 Patch4: c5eb6cf3aba0af048596106ed839b4ae17ecbcb1.patch
 Patch5: c75b811de0afeea6acf19c99a755b8e1c0585aa9.patch
 Patch6: 8a5dcc6e9da769bb49ce6a750cc0ef094d621b43.patch
+Patch7: CVE-2019-13118.patch
 
 %description
 This C library allows to transform XML files into other XML files
@@ -132,6 +133,7 @@ man components for the libxslt package.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 pushd ..
 cp -a libxslt-1.1.33 build32
 popd
@@ -141,12 +143,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1557509156
-export LDFLAGS="${LDFLAGS} -fno-lto"
-export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+export SOURCE_DATE_EPOCH=1562007653
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -169,7 +171,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1557509156
+export SOURCE_DATE_EPOCH=1562007653
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libxslt
 cp COPYING %{buildroot}/usr/share/package-licenses/libxslt/COPYING

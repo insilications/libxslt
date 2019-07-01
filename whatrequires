@@ -6,7 +6,11 @@ colord
 dracut
 fwupd
 gcc
+gcc7
+gcc8
+gtk-doc
 kconfigwidgets
+kdoctools
 kimchi
 kio
 kservice
@@ -23,9 +27,9 @@ nautilus
 neomutt
 pyside2-setup
 raptor2
-sof-crosstool-ng
 tdb
 wayland
 wok
 xdg-user-dirs
 xdg-utils
+xmlb
