@@ -4,6 +4,7 @@ boinc-client
 cgit
 colord
 dracut
+firewalld
 fwupd
 gcc
 gcc7
