@@ -3,8 +3,6 @@
 # desirable. One name per line, no whitespace.
 #
 pkgconfig(libxml-2.0)
-libxml2-python
-python-dev
 libgcrypt-dev
 libgcrypt-dev32
 libxml2-dev

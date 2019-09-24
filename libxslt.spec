@@ -6,7 +6,7 @@
 #
 Name     : libxslt
 Version  : 1.1.33
-Release  : 46
+Release  : 47
 URL      : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
 Source1 : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz.asc
@@ -28,12 +28,10 @@ BuildRequires : libgcrypt-dev32
 BuildRequires : libgpg-error-dev
 BuildRequires : libgpg-error-dev32
 BuildRequires : libxml2-dev
-BuildRequires : libxml2-python
 BuildRequires : libxslt-bin
 BuildRequires : pkg-config
 BuildRequires : pkgconfig(32libxml-2.0)
 BuildRequires : pkgconfig(libxml-2.0)
-BuildRequires : python-dev
 BuildRequires : xz-dev
 BuildRequires : zlib-dev
 Patch1: 0004-Make-generate-id-deterministic.patch
@@ -143,7 +141,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568868679
+export SOURCE_DATE_EPOCH=1569362754
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -171,7 +169,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1568868679
+export SOURCE_DATE_EPOCH=1569362754
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libxslt
 cp COPYING %{buildroot}/usr/share/package-licenses/libxslt/COPYING
