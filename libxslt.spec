@@ -6,7 +6,7 @@
 #
 Name     : libxslt
 Version  : 1.1.33
-Release  : 47
+Release  : 48
 URL      : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
 Source0  : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
 Source1 : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz.asc
@@ -41,6 +41,7 @@ Patch4: CVE-2019-13117.patch
 Patch5: c75b811de0afeea6acf19c99a755b8e1c0585aa9.patch
 Patch6: 8a5dcc6e9da769bb49ce6a750cc0ef094d621b43.patch
 Patch7: CVE-2019-13118.patch
+Patch8: CVE-2019-18197.patch
 
 %description
 This C library allows to transform XML files into other XML files
@@ -132,6 +133,7 @@ man components for the libxslt package.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 pushd ..
 cp -a libxslt-1.1.33 build32
 popd
@@ -141,7 +143,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1569362754
+export SOURCE_DATE_EPOCH=1571446923
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -169,12 +171,12 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1569362754
+export SOURCE_DATE_EPOCH=1571446923
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libxslt
-cp COPYING %{buildroot}/usr/share/package-licenses/libxslt/COPYING
-cp Copyright %{buildroot}/usr/share/package-licenses/libxslt/Copyright
-cp tests/docbook/dtd/3.1.7/COPYRIGHT %{buildroot}/usr/share/package-licenses/libxslt/tests_docbook_dtd_3.1.7_COPYRIGHT
+cp %{_builddir}/libxslt-1.1.33/COPYING %{buildroot}/usr/share/package-licenses/libxslt/0005480dce93b70f7d62fa311f49e3c6c1a6dcfa
+cp %{_builddir}/libxslt-1.1.33/Copyright %{buildroot}/usr/share/package-licenses/libxslt/0005480dce93b70f7d62fa311f49e3c6c1a6dcfa
+cp %{_builddir}/libxslt-1.1.33/tests/docbook/dtd/3.1.7/COPYRIGHT %{buildroot}/usr/share/package-licenses/libxslt/16937d0bf2e4a1b5cc4e3b45c7282e9c7aa658cd
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -262,9 +264,8 @@ find -name "*.pyo" %{buildroot} | xargs rm -f
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/libxslt/COPYING
-/usr/share/package-licenses/libxslt/Copyright
-/usr/share/package-licenses/libxslt/tests_docbook_dtd_3.1.7_COPYRIGHT
+/usr/share/package-licenses/libxslt/0005480dce93b70f7d62fa311f49e3c6c1a6dcfa
+/usr/share/package-licenses/libxslt/16937d0bf2e4a1b5cc4e3b45c7282e9c7aa658cd
 
 %files man
 %defattr(0644,root,root,0755)
