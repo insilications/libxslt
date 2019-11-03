@@ -35,6 +35,7 @@ libxslt.so.1:LIBXML2_1.1.26
 libxslt.so.1:LIBXML2_1.1.27
 libxslt.so.1:LIBXML2_1.1.3
 libxslt.so.1:LIBXML2_1.1.30
+libxslt.so.1:LIBXML2_1.1.34
 libxslt.so.1:LIBXML2_1.1.5
 libxslt.so.1:LIBXML2_1.1.7
 libxslt.so.1:LIBXML2_1.1.9
@@ -68,6 +69,7 @@ libxslt.so.1:xsltChoose
 libxslt.so.1:xsltCleanupGlobals
 libxslt.so.1:xsltCleanupTemplates
 libxslt.so.1:xsltComment
+libxslt.so.1:xsltCompMatchClearCache
 libxslt.so.1:xsltCompileAttr
 libxslt.so.1:xsltCompilePattern
 libxslt.so.1:xsltComputeSortResult
@@ -197,6 +199,7 @@ libxslt.so.1:xsltParseStylesheetInclude
 libxslt.so.1:xsltParseStylesheetOutput
 libxslt.so.1:xsltParseStylesheetParam
 libxslt.so.1:xsltParseStylesheetProcess
+libxslt.so.1:xsltParseStylesheetUser
 libxslt.so.1:xsltParseStylesheetVariable
 libxslt.so.1:xsltParseTemplateContent
 libxslt.so.1:xsltPreComputeExtModuleElement

@@ -5,12 +5,12 @@
 # Source0 file verified with key 0x15588B26596BEA5D (Daniel.Veillard@w3.org)
 #
 Name     : libxslt
-Version  : 1.1.33
-Release  : 48
-URL      : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
-Source0  : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz
-Source1 : http://xmlsoft.org/sources/libxslt-1.1.33.tar.gz.asc
-Summary  : Library providing the GNOME XSLT engine
+Version  : 1.1.34
+Release  : 49
+URL      : http://xmlsoft.org/sources/libxslt-1.1.34.tar.gz
+Source0  : http://xmlsoft.org/sources/libxslt-1.1.34.tar.gz
+Source1 : http://xmlsoft.org/sources/libxslt-1.1.34.tar.gz.asc
+Summary  : XML stylesheet transformation library
 Group    : Development/Tools
 License  : MIT
 Requires: libxslt-bin = %{version}-%{release}
@@ -32,16 +32,9 @@ BuildRequires : libxslt-bin
 BuildRequires : pkg-config
 BuildRequires : pkgconfig(32libxml-2.0)
 BuildRequires : pkgconfig(libxml-2.0)
+BuildRequires : util-linux
 BuildRequires : xz-dev
 BuildRequires : zlib-dev
-Patch1: 0004-Make-generate-id-deterministic.patch
-Patch2: pcfile.patch
-Patch3: CVE-2019-11068.patch
-Patch4: CVE-2019-13117.patch
-Patch5: c75b811de0afeea6acf19c99a755b8e1c0585aa9.patch
-Patch6: 8a5dcc6e9da769bb49ce6a750cc0ef094d621b43.patch
-Patch7: CVE-2019-13118.patch
-Patch8: CVE-2019-18197.patch
 
 %description
 This C library allows to transform XML files into other XML files
@@ -64,6 +57,7 @@ Group: Development
 Requires: libxslt-lib = %{version}-%{release}
 Requires: libxslt-bin = %{version}-%{release}
 Provides: libxslt-devel = %{version}-%{release}
+Requires: libxslt = %{version}-%{release}
 Requires: libxslt = %{version}-%{release}
 
 %description dev
@@ -125,17 +119,9 @@ man components for the libxslt package.
 
 
 %prep
-%setup -q -n libxslt-1.1.33
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
+%setup -q -n libxslt-1.1.34
 pushd ..
-cp -a libxslt-1.1.33 build32
+cp -a libxslt-1.1.34 build32
 popd
 
 %build
@@ -143,12 +129,16 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1571446923
+export SOURCE_DATE_EPOCH=1572794987
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -fcf-protection=full -ffat-lto-objects -flto=4 -fstack-protector-strong "
+export FCFLAGS="$CFLAGS -O3 -fcf-protection=full -ffat-lto-objects -flto=4 -fstack-protector-strong "
+export FFLAGS="$CFLAGS -O3 -fcf-protection=full -ffat-lto-objects -flto=4 -fstack-protector-strong "
+export CXXFLAGS="$CXXFLAGS -O3 -fcf-protection=full -ffat-lto-objects -flto=4 -fstack-protector-strong "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -171,12 +161,12 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1571446923
+export SOURCE_DATE_EPOCH=1572794987
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libxslt
-cp %{_builddir}/libxslt-1.1.33/COPYING %{buildroot}/usr/share/package-licenses/libxslt/0005480dce93b70f7d62fa311f49e3c6c1a6dcfa
-cp %{_builddir}/libxslt-1.1.33/Copyright %{buildroot}/usr/share/package-licenses/libxslt/0005480dce93b70f7d62fa311f49e3c6c1a6dcfa
-cp %{_builddir}/libxslt-1.1.33/tests/docbook/dtd/3.1.7/COPYRIGHT %{buildroot}/usr/share/package-licenses/libxslt/16937d0bf2e4a1b5cc4e3b45c7282e9c7aa658cd
+cp %{_builddir}/libxslt-1.1.34/COPYING %{buildroot}/usr/share/package-licenses/libxslt/0005480dce93b70f7d62fa311f49e3c6c1a6dcfa
+cp %{_builddir}/libxslt-1.1.34/Copyright %{buildroot}/usr/share/package-licenses/libxslt/0005480dce93b70f7d62fa311f49e3c6c1a6dcfa
+cp %{_builddir}/libxslt-1.1.34/tests/docbook/dtd/3.1.7/COPYRIGHT %{buildroot}/usr/share/package-licenses/libxslt/16937d0bf2e4a1b5cc4e3b45c7282e9c7aa658cd
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -253,14 +243,14 @@ find -name "*.pyo" %{buildroot} | xargs rm -f
 /usr/lib64/libexslt.so.0
 /usr/lib64/libexslt.so.0.8.20
 /usr/lib64/libxslt.so.1
-/usr/lib64/libxslt.so.1.1.33
+/usr/lib64/libxslt.so.1.1.34
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libexslt.so.0
 /usr/lib32/libexslt.so.0.8.20
 /usr/lib32/libxslt.so.1
-/usr/lib32/libxslt.so.1.1.33
+/usr/lib32/libxslt.so.1.1.34
 
 %files license
 %defattr(0644,root,root,0755)
