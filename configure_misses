@@ -2,7 +2,9 @@ Configure miss: floor
 Configure miss: fabs
 Configure miss: x86_64-generic-linux-gnu-libgcrypt-config
 Configure miss: x86_64-generic-linux-gnu-xml2-config
+Configure miss: libxml2 module support
 Configure miss: floor
 Configure miss: fabs
-Configure miss: i686-generic-linux-gnu-libgcrypt-config
-Configure miss: i686-generic-linux-gnu-xml2-config
+Configure miss: x86_64-generic-linux-gnu-libgcrypt-config
+Configure miss: x86_64-generic-linux-gnu-xml2-config
+Configure miss: libxml2 module support

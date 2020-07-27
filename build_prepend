@@ -1,0 +1,2 @@
+#find . -type f -name '*.am' -exec sed -i 's/\-\-nonet/\ /g' {} \;
+#find . -type f -name 'Makefile*' -exec sed -i 's/\-\-nonet/\ /g' {} \;

@@ -1,0 +1,51 @@
+From fb9771c9f12a099c674070118ffaedd1dbd0caba Mon Sep 17 00:00:00 2001
+From: insilications <boboniboni@gmail.com>
+Date: Sun, 26 Jul 2020 21:49:54 -0300
+Subject: [PATCH] Fix install with no docs
+
+---
+ Makefile.am  | 5 +----
+ configure.ac | 1 -
+ 2 files changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 2c417d0b..b98bdf55 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -2,11 +2,10 @@ SUBDIRS = \
+ 	libxslt \
+ 	libexslt \
+ 	xsltproc \
+-	doc \
+ 	$(PYTHON_SUBDIR) \
+ 	tests
+ 
+-DIST_SUBDIRS = libxslt libexslt xsltproc python doc tests
++DIST_SUBDIRS = libxslt libexslt xsltproc python tests
+ 
+ confexecdir=$(libdir)
+ confexec_DATA = xsltConf.sh
+@@ -14,8 +13,6 @@ confexec_DATA = xsltConf.sh
+ bin_SCRIPTS = xslt-config
+ 
+ dist-hook: cleanup libxslt.spec
+-	touch $(distdir)/doc/*.xml
+-	touch $(distdir)/doc/EXSLT/*.xml
+ 	touch $(distdir)/libxslt/*.syms
+ 	(cd $(srcdir) ; tar -cf - --exclude CVS --exclude .svn win32 vms examples) | (cd $(distdir); tar xf -)
+ 
+diff --git a/configure.ac b/configure.ac
+index a3dd27bb..074cf0fb 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -743,7 +743,6 @@ tests/exslt/dynamic/Makefile
+ tests/exslt/crypto/Makefile
+ tests/plugins/Makefile
+ tests/fuzz/Makefile
+-doc/Makefile
+ xslt-config
+ libxslt.spec
+ ])
+-- 
+2.27.0
+

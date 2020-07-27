@@ -9,6 +9,7 @@ fwupd
 gcc
 gcc7
 gcc8
+gcc9
 gtk-doc
 kconfigwidgets
 kdoctools
@@ -17,9 +18,6 @@ kio
 kservice
 kwallet
 libfprint
-libgfortran-avx
-libgfortran-compat-soname3
-libgfortran-compat-soname4
 libkcapi
 libmodulemd
 libvirt

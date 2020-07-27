@@ -1,5 +1,5 @@
 PKG_NAME := libxslt
-URL = http://xmlsoft.org/sources/libxslt-1.1.34.tar.gz
+URL = https://github.com/insilications/libxslt-clr.git
 ARCHIVES = 
 
 include ../common/Makefile.common

@@ -2,13 +2,18 @@
 # This file contains extra pkgconfig build requirements that don't get picked up but are 
 # desirable. One name per line, no whitespace.
 #
-pkgconfig(libxml-2.0)
 libgcrypt-dev
-libgcrypt-dev32
 libxml2-dev
+libxml2-staticdev
 zlib-dev
+zlib-staticdev
 libgpg-error-dev
-libgpg-error-dev32
 libxslt-bin
-xz-dev
+xz-staticdev
 docbook-xml
+python3-dev
+python3-staticdev
+pkg-config
+util-linux
+xmlto
+findutils
