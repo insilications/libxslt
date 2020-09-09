@@ -15,5 +15,7 @@ python3-dev
 python3-staticdev
 pkg-config
 util-linux
+util-linux-dev
+util-linux-staticdev
 xmlto
 findutils
