@@ -4,15 +4,16 @@
 #
 %define keepstatic 1
 Name     : libxslt
-Version  : 20.09.09
-Release  : 51
-URL      : file:///insilications/build/clearlinux/packages/libxslt/libxslt-20.09.09.tar.gz
-Source0  : file:///insilications/build/clearlinux/packages/libxslt/libxslt-20.09.09.tar.gz
+Version  : 7995
+Release  : 52
+URL      : file:///aot/build/clearlinux/packages/libxslt/libxslt-7995.tar.gz
+Source0  : file:///aot/build/clearlinux/packages/libxslt/libxslt-7995.tar.gz
 Summary  : XSLT library version 2.
 Group    : Development/Tools
 License  : MIT
 Requires: libxslt-bin = %{version}-%{release}
 Requires: libxslt-lib = %{version}-%{release}
+Requires: libxslt-man = %{version}-%{release}
 Requires: libxslt-python = %{version}-%{release}
 Requires: libxslt-python3 = %{version}-%{release}
 BuildRequires : docbook-xml
@@ -67,6 +68,7 @@ dev components for the libxslt package.
 %package doc
 Summary: doc components for the libxslt package.
 Group: Documentation
+Requires: libxslt-man = %{version}-%{release}
 
 %description doc
 doc components for the libxslt package.
@@ -78,6 +80,14 @@ Group: Libraries
 
 %description lib
 lib components for the libxslt package.
+
+
+%package man
+Summary: man components for the libxslt package.
+Group: Default
+
+%description man
+man components for the libxslt package.
 
 
 %package python
@@ -121,7 +131,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1599677766
+export SOURCE_DATE_EPOCH=1615240405
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -129,28 +139,25 @@ export NM=gcc-nm
 ## altflags_pgo content
 ## pgo generate
 export PGO_GEN="-fprofile-generate=/var/tmp/pgo -fprofile-dir=/var/tmp/pgo -fprofile-abs-path -fprofile-update=atomic -fprofile-arcs -ftest-coverage --coverage -fprofile-partial-training"
-export CFLAGS_GENERATE="-O3 -march=native -mtune=native -falign-functions=32 -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -fPIC -ffat-lto-objects $PGO_GEN"
-export FCFLAGS_GENERATE="-O3 -march=native -mtune=native -falign-functions=32 -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -fPIC -ffat-lto-objects $PGO_GEN"
-export FFLAGS_GENERATE="-O3 -march=native -mtune=native -falign-functions=32 -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -fPIC -ffat-lto-objects $PGO_GEN"
-export CXXFLAGS_GENERATE="-O3 -march=native -mtune=native -falign-functions=32 -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -fvisibility-inlines-hidden -pipe -fPIC -ffat-lto-objects $PGO_GEN"
-export LDFLAGS_GENERATE="-O3 -march=native -mtune=native -falign-functions=32 -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -fPIC -ffat-lto-objects $PGO_GEN"
+export CFLAGS_GENERATE="-O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -fPIC -ffat-lto-objects $PGO_GEN"
+export FCFLAGS_GENERATE="-O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -fPIC -ffat-lto-objects $PGO_GEN"
+export FFLAGS_GENERATE="-O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -fPIC -ffat-lto-objects $PGO_GEN"
+export CXXFLAGS_GENERATE="-O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -fvisibility-inlines-hidden -pipe -fPIC -ffat-lto-objects $PGO_GEN"
+export LDFLAGS_GENERATE="-O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -fPIC -ffat-lto-objects $PGO_GEN"
 ## pgo use
 ## -ffat-lto-objects -fno-PIE -fno-PIE -m64 -no-pie -fpic -fvisibility=hidden
 ## gcc: -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-common -Wno-error -Wp,-D_REENTRANT
 export PGO_USE="-fprofile-use=/var/tmp/pgo -fprofile-dir=/var/tmp/pgo -fprofile-abs-path -fprofile-correction -fprofile-partial-training"
-export CFLAGS_USE="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -fPIC -ffat-lto-objects $PGO_USE"
-export FCFLAGS_USE="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -fPIC -ffat-lto-objects $PGO_USE"
-export FFLAGS_USE="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -fPIC -ffat-lto-objects $PGO_USE"
-export CXXFLAGS_USE="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -fPIC -ffat-lto-objects $PGO_USE"
-export LDFLAGS_USE="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -fPIC -ffat-lto-objects $PGO_USE"
-export AR=gcc-ar
-export RANLIB=gcc-ranlib
-export NM=gcc-nm
+export CFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -fPIC -ffat-lto-objects $PGO_USE"
+export FCFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -fPIC -ffat-lto-objects $PGO_USE"
+export FFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -fPIC -ffat-lto-objects $PGO_USE"
+export CXXFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -fPIC -ffat-lto-objects $PGO_USE"
+export LDFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -fPIC -ffat-lto-objects $PGO_USE"
+export AR=/usr/bin/gcc-ar
+export RANLIB=/usr/bin/gcc-ranlib
+export NM=/usr/bin/gcc-nm
 #export CCACHE_DISABLE=1
 ## altflags_pgo end
-##
-%define _lto_cflags 1
-##
 export CFLAGS="${CFLAGS_GENERATE}"
 export CXXFLAGS="${CXXFLAGS_GENERATE}"
 export FFLAGS="${FFLAGS_GENERATE}"
@@ -171,7 +178,7 @@ export CXXFLAGS="${CXXFLAGS_USE}"
 export FFLAGS="${FFLAGS_USE}"
 export FCFLAGS="${FCFLAGS_USE}"
 export LDFLAGS="${LDFLAGS_USE}"
-%autogen  --enable-shared --enable-static --with-libxml-include-prefix=/usr/include/libxml2
+%autogen
 ## make_prepend content
 #find . -type f -name '*.am' -exec sed -i 's/\-\-nonet/\ /g' {} \;
 #find . -type f -name 'Makefile*' -exec sed -i 's/\-\-nonet/\ /g' {} \;
@@ -189,7 +196,7 @@ export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 make VERBOSE=1 V=1 check || :
 
 %install
-export SOURCE_DATE_EPOCH=1599677766
+export SOURCE_DATE_EPOCH=1615240405
 rm -rf %{buildroot}
 %make_install
 ## install_append content
@@ -198,7 +205,6 @@ find -name "*.pyo" %{buildroot} | xargs rm -f
 
 %files
 %defattr(-,root,root,-)
-/usr/lib64/xsltConf.sh
 
 %files bin
 %defattr(-,root,root,-)
@@ -231,16 +237,108 @@ find -name "*.pyo" %{buildroot} | xargs rm -f
 /usr/include/libxslt/xsltexports.h
 /usr/include/libxslt/xsltlocale.h
 /usr/include/libxslt/xsltutils.h
+/usr/lib64/cmake/libxslt/FindGcrypt.cmake
+/usr/lib64/cmake/libxslt/libxslt-config.cmake
 /usr/lib64/libexslt.so
 /usr/lib64/libxslt.so
 /usr/lib64/pkgconfig/libexslt.pc
 /usr/lib64/pkgconfig/libxslt.pc
+/usr/lib64/xsltConf.sh
 /usr/share/aclocal/*.m4
 /usr/share/man/man3/libexslt.3
 /usr/share/man/man3/libxslt.3
 
 %files doc
 %defattr(0644,root,root,0755)
+/usr/share/doc/libxslt-1.1.34/html/API.html
+/usr/share/doc/libxslt-1.1.34/html/APIchunk0.html
+/usr/share/doc/libxslt-1.1.34/html/APIchunk1.html
+/usr/share/doc/libxslt-1.1.34/html/APIchunk10.html
+/usr/share/doc/libxslt-1.1.34/html/APIchunk11.html
+/usr/share/doc/libxslt-1.1.34/html/APIchunk12.html
+/usr/share/doc/libxslt-1.1.34/html/APIchunk2.html
+/usr/share/doc/libxslt-1.1.34/html/APIchunk3.html
+/usr/share/doc/libxslt-1.1.34/html/APIchunk4.html
+/usr/share/doc/libxslt-1.1.34/html/APIchunk5.html
+/usr/share/doc/libxslt-1.1.34/html/APIchunk6.html
+/usr/share/doc/libxslt-1.1.34/html/APIchunk7.html
+/usr/share/doc/libxslt-1.1.34/html/APIchunk8.html
+/usr/share/doc/libxslt-1.1.34/html/APIchunk9.html
+/usr/share/doc/libxslt-1.1.34/html/APIconstructors.html
+/usr/share/doc/libxslt-1.1.34/html/APIfiles.html
+/usr/share/doc/libxslt-1.1.34/html/APIfunctions.html
+/usr/share/doc/libxslt-1.1.34/html/APIsymbols.html
+/usr/share/doc/libxslt-1.1.34/html/EXSLT/APIchunk0.html
+/usr/share/doc/libxslt-1.1.34/html/EXSLT/APIconstructors.html
+/usr/share/doc/libxslt-1.1.34/html/EXSLT/APIfiles.html
+/usr/share/doc/libxslt-1.1.34/html/EXSLT/APIfunctions.html
+/usr/share/doc/libxslt-1.1.34/html/EXSLT/APIsymbols.html
+/usr/share/doc/libxslt-1.1.34/html/EXSLT/bugs.html
+/usr/share/doc/libxslt-1.1.34/html/EXSLT/docs.html
+/usr/share/doc/libxslt-1.1.34/html/EXSLT/downloads.html
+/usr/share/doc/libxslt-1.1.34/html/EXSLT/exslt.html
+/usr/share/doc/libxslt-1.1.34/html/EXSLT/help.html
+/usr/share/doc/libxslt-1.1.34/html/EXSLT/index.html
+/usr/share/doc/libxslt-1.1.34/html/EXSLT/intro.html
+/usr/share/doc/libxslt-1.1.34/html/FAQ.html
+/usr/share/doc/libxslt-1.1.34/html/Libxslt-Logo-180x168.gif
+/usr/share/doc/libxslt-1.1.34/html/Libxslt-Logo-90x34.gif
+/usr/share/doc/libxslt-1.1.34/html/bugs.html
+/usr/share/doc/libxslt-1.1.34/html/contexts.gif
+/usr/share/doc/libxslt-1.1.34/html/contribs.html
+/usr/share/doc/libxslt-1.1.34/html/docbook.html
+/usr/share/doc/libxslt-1.1.34/html/docs.html
+/usr/share/doc/libxslt-1.1.34/html/downloads.html
+/usr/share/doc/libxslt-1.1.34/html/extensions.html
+/usr/share/doc/libxslt-1.1.34/html/help.html
+/usr/share/doc/libxslt-1.1.34/html/html/book1.html
+/usr/share/doc/libxslt-1.1.34/html/html/home.png
+/usr/share/doc/libxslt-1.1.34/html/html/index.html
+/usr/share/doc/libxslt-1.1.34/html/html/left.png
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-attributes.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-documents.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-extensions.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-extra.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-functions.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-imports.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-keys.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-lib.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-namespaces.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-numbersInternals.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-pattern.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-preproc.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-security.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-templates.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-transform.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-variables.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-xslt.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-xsltInternals.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-xsltexports.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-xsltlocale.html
+/usr/share/doc/libxslt-1.1.34/html/html/libxslt-xsltutils.html
+/usr/share/doc/libxslt-1.1.34/html/html/right.png
+/usr/share/doc/libxslt-1.1.34/html/html/up.png
+/usr/share/doc/libxslt-1.1.34/html/index.html
+/usr/share/doc/libxslt-1.1.34/html/internals.html
+/usr/share/doc/libxslt-1.1.34/html/intro.html
+/usr/share/doc/libxslt-1.1.34/html/news.html
+/usr/share/doc/libxslt-1.1.34/html/node.gif
+/usr/share/doc/libxslt-1.1.34/html/object.gif
+/usr/share/doc/libxslt-1.1.34/html/processing.gif
+/usr/share/doc/libxslt-1.1.34/html/python.html
+/usr/share/doc/libxslt-1.1.34/html/redhat.gif
+/usr/share/doc/libxslt-1.1.34/html/smallfootonly.gif
+/usr/share/doc/libxslt-1.1.34/html/stylesheet.gif
+/usr/share/doc/libxslt-1.1.34/html/templates.gif
+/usr/share/doc/libxslt-1.1.34/html/tutorial/libxslt_tutorial.c
+/usr/share/doc/libxslt-1.1.34/html/tutorial/libxslttutorial.html
+/usr/share/doc/libxslt-1.1.34/html/tutorial/libxslttutorial.xml
+/usr/share/doc/libxslt-1.1.34/html/tutorial2/libxslt_pipes.c
+/usr/share/doc/libxslt-1.1.34/html/tutorial2/libxslt_pipes.html
+/usr/share/doc/libxslt-1.1.34/html/tutorial2/libxslt_pipes.xml
+/usr/share/doc/libxslt-1.1.34/html/xslt.html
+/usr/share/doc/libxslt-1.1.34/html/xsltproc.html
+/usr/share/doc/libxslt-1.1.34/html/xsltproc2.html
 /usr/share/doc/libxslt-python-1.1.34/examples/basic.py
 /usr/share/doc/libxslt-python-1.1.34/examples/exslt.py
 /usr/share/doc/libxslt-python-1.1.34/examples/extelem.py
@@ -255,6 +353,10 @@ find -name "*.pyo" %{buildroot} | xargs rm -f
 /usr/lib64/libexslt.so.0.8.20
 /usr/lib64/libxslt.so.1
 /usr/lib64/libxslt.so.1.1.34
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/xsltproc.1
 
 %files python
 %defattr(-,root,root,-)

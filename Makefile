@@ -1,5 +1,5 @@
 PKG_NAME := libxslt
-URL = https://github.com/insilications/libxslt-clr.git
+URL = https://gitlab.gnome.org/GNOME/libxslt.git
 ARCHIVES = 
 
 include ../common/Makefile.common
